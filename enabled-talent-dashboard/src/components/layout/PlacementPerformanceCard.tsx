@@ -2,6 +2,8 @@ import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { useState, useMemo, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5050";
+
 function classNames(...xs: Array<string | false | null | undefined>) {
   return xs.filter(Boolean).join(' ');
 }
@@ -78,8 +80,8 @@ export function PlacementPerformanceCard({
       try {
         // Include comparisonYear parameter only when showComparison is true
         const url = showComparison 
-          ? `http://localhost:5050/api/placements/performance?year=${selectedYear}&timeRange=${timeRange}&comparisonYear=${comparisonYear}`
-          : `http://localhost:5050/api/placements/performance?year=${selectedYear}&timeRange=${timeRange}`;
+          ? `${API_URL}/api/placements/performance?year=${selectedYear}&timeRange=${timeRange}&comparisonYear=${comparisonYear}`
+          : `${API_URL}/api/placements/performance?year=${selectedYear}&timeRange=${timeRange}`;
         
         const response = await fetch(url);
         if (response.ok) {
@@ -150,7 +152,7 @@ export function PlacementPerformanceCard({
     
     const fetchComparisonData = async () => {
       try {
-        const response = await fetch(`http://localhost:5050/api/placements/performance?year=${comparisonYear}&timeRange=${timeRange}`);
+        const response = await fetch(`${API_URL}/api/placements/performance?year=${comparisonYear}&timeRange=${timeRange}`);
         if (response.ok) {
           const data = await response.json();
           setComparisonFetchedData({

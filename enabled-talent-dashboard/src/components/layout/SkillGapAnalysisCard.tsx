@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5050";
+
 type SkillGap = {
   skill: string;
   students: number;
@@ -76,7 +78,7 @@ export function SkillGapAnalysisCard({ deficitCount }: { deficitCount: number })
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5050/api/skills/gap?limit=10")
+    fetch(`${API_URL}/api/skills/gap?limit=10`)
       .then((r) => r.json())
       .then((json: SkillGapApiResponse) => {
         setSkills(Array.isArray(json?.data) ? json.data : []);
